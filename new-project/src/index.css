@@ -16,26 +16,18 @@ body{
 /* Sidebar */
 
 .sidebar{
-    width:180px;
+    width:250px;
     background-color:#202123;
     color:white;
     padding:20px;
-}
-.chat-item{
-    margin-bottom:10px;
-    padding:10px;
-}
-.chat-item{
-    padding:12px;
-    border-radius:8px;
-    cursor:pointer;
-    text-align:left;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
 }
 
 .sidebar h1{
-    font-size:24px;
+    font-size:28px;
     margin-bottom:20px;
-    text-align:center;
 }
 
 .sidebar div{
@@ -56,15 +48,6 @@ body{
     display:flex;
     flex-direction:column;
     justify-content:space-between;
-}
-.button-input{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:15px;
-}
-.button-input input{
-    flex:1;
 }
 
 /* Messages Area */

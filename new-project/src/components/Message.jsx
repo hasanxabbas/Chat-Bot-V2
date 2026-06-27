@@ -1,7 +1,7 @@
 function Message({text,sender}){
     return(
         <div className={`message ${sender}`}>
-            {text}
+            <p>{text}</p>
         </div>
     )
 }
