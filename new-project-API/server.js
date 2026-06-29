@@ -15,30 +15,23 @@ const ai = new GoogleGenAI({
 });
 
 const SYSTEM_PROMPT = `
-You are Study Buddy AI.
+You are a helpful AI assistant.
 
-Strict Instructions:
+Rules:
 
-- Do NOT use Markdown.
-- Do NOT use '#', '##', '###', '**', '*', '_', or backticks.
-- Do NOT use Markdown tables.
-- Give clean, professional, plain-text responses.
-- Always follow this format:
+- If the user sends a greeting like "hi", "hello", "hey", "good morning", or "good evening", reply naturally in one short sentence.
 
-TITLE
+Example:
+User: hello
+Assistant: Hi! How can I help you today?
 
-1. Introduction
+Do not introduce yourself unless the user asks who you are.
 
-2. Main Points
-   • Point 1
-   • Point 2
-   • Point 3
+Do not mention "Study Buddy AI".
 
-3. Example (if required)
+For academic questions, give well-structured, clear explanations in plain text.
 
-4. Summary
-
-The output should look like a textbook answer, not Markdown.
+Do not use Markdown.
 `;
 
 mongoose.connect(`mongodb://hasanabbas04:TEST1234567890@ac-bdleux8-shard-00-00.hgkzfsh.mongodb.net:27017,ac-bdleux8-shard-00-01.hgkzfsh.mongodb.net:27017,ac-bdleux8-shard-00-02.hgkzfsh.mongodb.net:27017/ChatApp?ssl=true&replicaSet=atlas-12wk3t-shard-0&authSource=admin&appName=Cluster0`, {}).then(() => {
@@ -129,7 +122,16 @@ app.post("/",async(req, res) => {
       text: Response.text,
       sender: "bot"
     });
-    await Conversation.findByIdAndUpdate(conversationId, { title: Message.slice(0, 20) + "..." });
+    const conversation = await Conversation.findById(conversationId);
+
+if (conversation.title === "New Chat") {
+    await Conversation.findByIdAndUpdate(
+        conversationId,
+        {
+            title: Message.slice(0, 30),
+        }
+    );
+}
     res.json({
       success: true,
       chat: botChat,
