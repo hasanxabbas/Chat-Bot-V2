@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Message from "./Message";
+import { FaPaperclip } from "react-icons/fa";
 
 function ChatWindow({ selectedConversation }) {
 
@@ -52,7 +53,6 @@ function ChatWindow({ selectedConversation }) {
             sender: "user",
             attachment: attachment ? {
                 filename: attachment.name,
-                path: attachment.path,
                 mimetype: attachment.type,
                 previewUrl: URL.createObjectURL(attachment),
             } : null
@@ -143,29 +143,42 @@ function ChatWindow({ selectedConversation }) {
             </div>
 
             <div className="button-input">
-                <input type="file" onChange={(e) => setAttachment(e.target.files[0])} />
-                {
-                    attachment &&
-                    ( <span style={{ marginLeft: "10px" }}>{attachment.name}</span> )
-                }
 
-                <input
-                    type="text"
-                    placeholder="Type a message..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            sendMessage();
-                        }
-                    }}
-                />
+    <input
+        id="file-upload"
+        type="file"
+        className="file-input"
+        onChange={(e) => setAttachment(e.target.files[0])}
+    />
 
-                <button onClick={sendMessage}>
-                    Send
-                </button>
+    <label htmlFor="file-upload" className="attach-btn">
+        <FaPaperclip />
+    </label>
 
-            </div>
+    {
+        attachment &&
+        <span className="file-name">
+            {attachment.name}
+        </span>
+    }
+
+    <input
+        type="text"
+        placeholder="Type a message..."
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        }}
+    />
+
+    <button onClick={sendMessage}>
+        Send
+    </button>
+
+</div>
 
         </div>
 

@@ -169,6 +169,16 @@ app.post("/", upload.single("attachment"), async(req, res) => {
       text: aiReply,
       sender: "bot"
     });
+    const conversation = await Conversation.findById(conversationId);
+
+if (conversation && conversation.title === "New Chat") {
+    await Conversation.findByIdAndUpdate(
+        conversationId,
+        {
+            title: Message.substring(0, 30),
+        }
+    );
+}
     res.json({
       sender: "user",
       success: true,
